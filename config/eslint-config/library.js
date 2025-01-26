@@ -8,7 +8,7 @@ import { config as baseConfig } from "./base.js";
  *
  * @type {import("eslint").Linter.Config}
  * */
-export const nodeJsConfig = [
+export const libraryConfig = [
   ...baseConfig,
   js.configs.recommended,
   eslintConfigPrettier,
