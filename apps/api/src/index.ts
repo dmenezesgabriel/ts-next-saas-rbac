@@ -1,10 +1,12 @@
-// import { ability } from "@saas/auth";
+import { defineAbilityFor } from "@saas/auth";
 
-// const userCanInviteSomeoneElse = ability.can("invite", "User");
-// const userCanDeleteOtherUsers = ability.can("delete", "User");
+const ability = defineAbilityFor({ role: "MEMBER" });
 
-// const userCannotDeleteOtherUsers = ability.cannot("delete", "User");
+const userCanInviteSomeoneElse = ability.can("invite", "User");
+const userCanDeleteOtherUsers = ability.can("delete", "User");
 
-// console.log(userCannotDeleteOtherUsers);
-// console.log(userCanInviteSomeoneElse);
-// console.log(userCanDeleteOtherUsers);
+const userCannotDeleteOtherUsers = ability.cannot("delete", "User");
+
+console.log(userCannotDeleteOtherUsers);
+console.log(userCanInviteSomeoneElse);
+console.log(userCanDeleteOtherUsers);
