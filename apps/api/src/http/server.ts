@@ -14,6 +14,7 @@ import fastifyJwt from "@fastify/jwt";
 import { getProfile } from "./routes/auth/get-profile";
 import { errorHandler } from "./error-handler";
 import { requestPasswordRecover } from "./routes/auth/request-password-recover";
+import { resetPassword } from "./routes/auth/reset-password";
 
 const loggerConfig = {
   development: {
@@ -55,6 +56,7 @@ app.register(createAccount);
 app.register(authenticateWithPassword);
 app.register(getProfile);
 app.register(requestPasswordRecover);
+app.register(resetPassword);
 
 app.listen({ port: 3333 }).then(() => {
   app.log.info("🚀 HTTP server running!");
