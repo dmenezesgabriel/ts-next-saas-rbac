@@ -9,6 +9,8 @@ import {
 } from "fastify-type-provider-zod";
 import { createAccount } from "./routes/auth/create-account";
 import fastifySwaggerUi from "@fastify/swagger-ui";
+import { authenticateWithPassword } from "./routes/auth/authenticate-with-password";
+import fastifyJwt from "@fastify/jwt";
 
 const loggerConfig = {
   development: {
@@ -40,8 +42,12 @@ app.register(fastifySwagger, {
 
 app.register(fastifySwaggerUi, { routePrefix: "/docs" });
 
+app.register(fastifyJwt, { secret: "my-jwt-scret" });
+
 app.register(fastifyCors);
+
 app.register(createAccount);
+app.register(authenticateWithPassword);
 
 app.listen({ port: 3333 }).then(() => {
   app.log.info("🚀 HTTP server running!");
