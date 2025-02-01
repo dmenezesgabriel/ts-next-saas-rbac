@@ -11,6 +11,8 @@ import { createAccount } from "./routes/auth/create-account";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import { authenticateWithPassword } from "./routes/auth/authenticate-with-password";
 import fastifyJwt from "@fastify/jwt";
+import { getProfile } from "./routes/auth/get-profile";
+import { errorHandler } from "./error-handler";
 
 const loggerConfig = {
   development: {
@@ -27,6 +29,8 @@ const app = fastify({
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
+
+app.setErrorHandler(errorHandler);
 
 app.register(fastifySwagger, {
   openapi: {
@@ -48,6 +52,7 @@ app.register(fastifyCors);
 
 app.register(createAccount);
 app.register(authenticateWithPassword);
+app.register(getProfile);
 
 app.listen({ port: 3333 }).then(() => {
   app.log.info("🚀 HTTP server running!");
