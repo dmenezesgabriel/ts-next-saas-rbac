@@ -15,6 +15,8 @@ import { getProfile } from "./routes/auth/get-profile";
 import { errorHandler } from "./error-handler";
 import { requestPasswordRecover } from "./routes/auth/request-password-recover";
 import { resetPassword } from "./routes/auth/reset-password";
+import { authenticateWithGithub } from "./routes/auth/authenticate-with-github";
+import { env } from "@saas/env";
 
 const loggerConfig = {
   development: {
@@ -48,7 +50,7 @@ app.register(fastifySwagger, {
 
 app.register(fastifySwaggerUi, { routePrefix: "/docs" });
 
-app.register(fastifyJwt, { secret: "my-jwt-scret" });
+app.register(fastifyJwt, { secret: env.JWT_SECRET });
 
 app.register(fastifyCors);
 
@@ -57,7 +59,8 @@ app.register(authenticateWithPassword);
 app.register(getProfile);
 app.register(requestPasswordRecover);
 app.register(resetPassword);
+app.register(authenticateWithGithub);
 
-app.listen({ port: 3333 }).then(() => {
+app.listen({ port: env.SERVER_PORT }).then(() => {
   app.log.info("🚀 HTTP server running!");
 });
