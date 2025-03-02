@@ -3,7 +3,6 @@ import { prisma } from "@/lib/prisma";
 import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
-import { BadRequestError } from "../_error/bad-request-error";
 import { createSlug } from "@/utils/create-slug";
 import { getUserPermissions } from "@/utils/get-user-permissions";
 import { UnauthorizedError } from "../_error/unauthorized-error";
@@ -27,7 +26,7 @@ export async function createProject(app: FastifyInstance) {
             slug: z.string(),
           }),
           response: {
-            200: z.object({
+            201: z.object({
               projectId: z.string().uuid(),
             }),
           },
