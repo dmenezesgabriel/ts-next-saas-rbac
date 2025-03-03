@@ -32,6 +32,9 @@ import { updateProject } from "./routes/projects/update-project";
 import { getMembers } from "./routes/members/get-members";
 import { updateMember } from "./routes/members/update-member";
 import { removeMember } from "./routes/members/remove-member";
+import { createInvite } from "./routes/invites/create-invite";
+import { getInvite } from "./routes/invites/get-invite";
+import { getInvites } from "./routes/invites/get-invites";
 
 const loggerConfig = {
   development: {
@@ -101,6 +104,10 @@ app.register(updateProject);
 app.register(getMembers);
 app.register(updateMember);
 app.register(removeMember);
+
+app.register(createInvite);
+app.register(getInvite);
+app.register(getInvites);
 
 app.listen({ port: env.SERVER_PORT }).then(() => {
   app.log.info("🚀 HTTP server running!");
