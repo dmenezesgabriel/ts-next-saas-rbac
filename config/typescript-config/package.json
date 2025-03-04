@@ -6,6 +6,7 @@
   "files": [
     "nextjs.json",
     "library.json",
-    "node.json"
+    "node.json",
+    "nextjs.json"
   ]
 }
