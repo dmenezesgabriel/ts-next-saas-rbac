@@ -17,5 +17,7 @@ export async function signInWithGithub({ code }: SignInWithGithubRequest) {
     })
     .json<SignInWithGithubResponse>();
 
+  console.log(result);
+
   return result;
 }
