@@ -6,21 +6,22 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import Image from "next/image";
-import { signInWithEmailAndPassword } from "./actions";
+
 import githubIcon from "@/assets/github-icon.svg";
-import { AlertTriangle, Loader2 } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { useFormState } from "@/hooks/use-form-state";
 import { useRouter } from "next/navigation";
+import { useFormState } from "@/hooks/use-form-state";
+import { signUpAction } from "./actions";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertTriangle, Loader2 } from "lucide-react";
 import { signInWithGithub } from "../actions";
 
-export function SignInForm() {
+export function SignUpForm() {
   const router = useRouter();
 
   const [{ success, message, errors }, handleSubmit, isPending] = useFormState(
-    signInWithEmailAndPassword,
+    signUpAction,
     () => {
-      router.push("/");
+      router.push("/auth/sign-in");
     }
   );
 
@@ -36,6 +37,18 @@ export function SignInForm() {
             </AlertDescription>
           </Alert>
         )}
+
+        <div className="space-y-1">
+          <Label htmlFor="name">Name</Label>
+          <Input name="name" type="text" id="name" />
+
+          {errors?.name && (
+            <p className="text-xs font-medium text-red-500 dark:text-red-400">
+              {errors.name[0]}
+            </p>
+          )}
+        </div>
+
         <div className="space-y-1">
           <Label htmlFor="email">E-mail</Label>
           <Input name="email" type="email" id="email" />
@@ -56,28 +69,35 @@ export function SignInForm() {
               {errors.password[0]}
             </p>
           )}
+        </div>
 
-          <Link
-            href="/auth/forgot-password"
-            className="text-foreground text-xs font-medium hover:underline"
-          >
-            Forgot your password?
-          </Link>
+        <div className="space-y-1">
+          <Label htmlFor="password_confirmation">Confirm your password</Label>
+          <Input
+            name="password_confirmation"
+            type="password"
+            id="password_confirmation"
+          />
+
+          {errors?.password_confirmation && (
+            <p className="text-xs font-medium text-red-500 dark:text-red-400">
+              {errors.password_confirmation[0]}
+            </p>
+          )}
         </div>
 
         <Button type="submit" className="w-full" disabled={isPending}>
           {isPending ? (
             <Loader2 className="size-4 animate-spin" />
           ) : (
-            "Sign in with e-mail"
+            "Create account"
           )}
         </Button>
 
         <Button variant="link" className="w-full" size="sm" asChild>
-          <Link href="/auth/sign-up">Create new account</Link>
+          <Link href="/auth/sign-in">Already registered? Sign in</Link>
         </Button>
       </form>
-
       <Separator />
 
       <form action={signInWithGithub}>
@@ -87,7 +107,7 @@ export function SignInForm() {
             className="mr-2 size-4 dark:invert"
             alt="GitHub icon"
           />
-          Sign in with Github
+          Sign up with Github
         </Button>
       </form>
     </div>
